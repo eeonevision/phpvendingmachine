@@ -34,7 +34,7 @@ class VendingMachine
     {
         if ($this->userWallet->withDraw($nominal, $amount)) {
             $this->vmWallet->addFunds($nominal, $amount);
-            print_r("The current balance is:" . $this->currentBalance += ($nominal * $amount));
+            print_r("The current balance is increased to:" . $this->currentBalance += ($nominal * $amount));
             return true;
         } else {
             print_r("You want to insert not existed nominal in your wallet...");
@@ -56,7 +56,7 @@ class VendingMachine
 
             $this->currentBalance = 0;
 
-            print_r("The change was funded...");
+            print_r("The change was gave to you...");
             return true;
         } else {
             print_r("You have not insert any coins in the machine!");
@@ -66,24 +66,40 @@ class VendingMachine
 
     public function getProductList()
     {
-
+        $products = $this->products->getProducts();
+        print_r("The list of products:\n $products");
+        return $products;
     }
 
     public function getVMBalance()
     {
         $balance = $this->vmWallet->getBalance();
-        print_r($balance);
+        print_r("The Vending machine balance is: $balance");
 
         return $balance;
     }
 
     public function getCurrentBalance()
     {
+        print_r("The current balance is: $this->currentBalance");
         return $this->currentBalance;
     }
 
-    public function buyProduct($productID)
+    public function buyProduct($name)
     {
-
+        $key = $this->products->getProductKey($name);
+        if ($key != null || $key != false) {
+            $product = $this->products->getProducts()[$key];
+            if ($this->currentBalance >= $product['price']) {
+                if ($this->products->buyProduct($key)) {
+                    $this->currentBalance -= $product['price'];
+                    print_r("The product was bought successfully!");
+                    return true;
+                }
+                print_r("Sorry, but you have no enough balance for buy this product!");
+            }
+            print_r("Sorry, this product was not found.");
+        }
+        return false;
     }
 }
