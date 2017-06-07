@@ -1,0 +1,20 @@
+{
+  "name": "cognitive_test_app/vending_machine",
+  "description": "This test application emulates work of vending machine",
+  "minimum-stability": "stable",
+  "license": "GPL V3",
+  "authors": [
+    {
+      "name": "Vladislav D",
+      "email": "v.dmitriyev@innopolis.ru"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "VMApp\\": "Sources/VMApp",
+      "VMApp\\Models\\": "Sources/VMApp/Models",
+      "VMApp\\BLL\\": "Sources/VMApp/BLL",
+      "VMApp\\Tests\\": "Sources/VmApp/Tests"
+    }
+  }
+}
