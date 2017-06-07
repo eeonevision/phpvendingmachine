@@ -8,6 +8,7 @@
 
 namespace VMApp\BLL;
 
+use Exception;
 
 class VendingMachine
 {
@@ -34,7 +35,11 @@ class VendingMachine
     {
         if ($this->userWallet->withDraw($nominal, $amount)) {
             $this->vmWallet->addFunds($nominal, $amount);
-            print_r("The current balance is increased to:" . $this->currentBalance += ($nominal * $amount));
+            print_r(
+                "Coins successful inserted! The current balance is: "
+                . ($this->currentBalance += ($nominal * $amount))
+                . "\n"
+            );
             return true;
         } else {
             print_r("You want to insert not existed nominal in your wallet...");
@@ -45,10 +50,15 @@ class VendingMachine
     public function getChange()
     {
         if ($this->currentBalance != 0) {
-            $sortedArray = krsort($this->getVMBalance());
-
-            foreach ($sortedArray as $key => $value) {
+            $balance = $this->getVMBalance();
+            krsort($balance);
+            foreach ($balance as $key => $value) {
                 $parts = $this->currentBalance % $key;
+                if ($parts == 0) {
+                    $parts = $this->currentBalance / $key;
+                } else {
+                    $parts = ($this->currentBalance - $parts) / $key;
+                }
                 $this->vmWallet->withDraw($key, $parts);
                 $this->userWallet->addFunds($key, $parts);
                 $this->currentBalance -= ($key * $parts);
@@ -56,10 +66,10 @@ class VendingMachine
 
             $this->currentBalance = 0;
 
-            print_r("The change was gave to you...");
+            print_r("The change was given to you...");
             return true;
         } else {
-            print_r("You have not insert any coins in the machine!");
+            print_r("You hadn't insert any coins in the machine!");
             return false;
         }
     }
@@ -67,14 +77,26 @@ class VendingMachine
     public function getProductList()
     {
         $products = $this->products->getProducts();
-        print_r("The list of products:\n $products");
+        print_r("The list of products:\n");
+        print_r($products);
+
         return $products;
     }
 
     public function getVMBalance()
     {
         $balance = $this->vmWallet->getBalance();
-        print_r("The Vending machine balance is: $balance");
+        print_r("The Vending machine balance is:\n");
+        print_r($balance);
+
+        return $balance;
+    }
+
+    public function getUserBalance()
+    {
+        $balance = $this->userWallet->getBalance();
+        print_r("The user balance is:\n");
+        print_r($balance);
 
         return $balance;
     }
@@ -96,10 +118,10 @@ class VendingMachine
                     print_r("The product was bought successfully!");
                     return true;
                 }
-                print_r("Sorry, but you have no enough balance for buy this product!");
             }
-            print_r("Sorry, this product was not found.");
+            throw new Exception("Sorry, but you have no enough balance for buy this product!");
         }
+        print_r("Sorry, this product was not found.");
         return false;
     }
 }

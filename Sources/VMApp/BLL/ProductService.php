@@ -25,7 +25,7 @@ class ProductService
 
     public function getProductKey($name)
     {
-        $key = array_search($name, $this->products, true);
+        $key = array_search($name, array_column($this->products, 'name'));
         return $key;
     }
 

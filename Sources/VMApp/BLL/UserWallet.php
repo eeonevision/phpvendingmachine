@@ -23,7 +23,6 @@ class UserWallet implements WalletInterface
      */
     public function getBalance()
     {
-        print_r($this->wallet);
         return $this->wallet;
     }
 

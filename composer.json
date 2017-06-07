@@ -9,6 +9,9 @@
       "email": "v.dmitriyev@innopolis.ru"
     }
   ],
+  "require-dev": {
+    "phpunit/phpunit": "6.2.*"
+  },
   "autoload": {
     "psr-4": {
       "VMApp\\": "Sources/VMApp",
