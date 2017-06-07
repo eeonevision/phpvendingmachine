@@ -9,8 +9,8 @@
 namespace VMApp\BLL;
 
 
-interface MoneyLoaderInterface
+interface DataLoaderInterface
 {
-    public function __construct($moneyPath);
+    public function __construct($filePath);
     public function load();
 }

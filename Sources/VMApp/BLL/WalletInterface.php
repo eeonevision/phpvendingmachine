@@ -9,6 +9,8 @@
 namespace VMApp\BLL;
 interface WalletInterface
 {
+    public function __construct($walletPath);
     public function getBalance();
-    public function getFunds($money);
+    public function addFunds($nominal, $amount);
+    public function withDraw($nominal, $amount);
 }

@@ -8,17 +8,17 @@
 
 namespace VMApp\BLL;
 
-
-class JsonMoneyLoader implements MoneyLoaderInterface
+class JsonLoader implements DataLoaderInterface
 {
     private $file;
+
     /**
-     * JsonMoneyLoader constructor.
-     * @param $moneyPath
+     * JsonLoader constructor.
+     * @param $filePath
      */
-    public function __construct($moneyPath)
+    public function __construct($filePath)
     {
-        $this->file = file_get_contents($moneyPath);
+        $this->file = file_get_contents($filePath);
     }
 
     /**
