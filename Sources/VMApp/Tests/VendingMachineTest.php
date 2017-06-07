@@ -14,9 +14,9 @@ class VendingMachineTest extends TestCase
     public function getVM()
     {
         return $this->vm = new VendingMachine(
-            '../../../Content/userwallet.json',
-            '../../../Content/vmwallet.json',
-            '../../../Content/products.json'
+            'Content/userwallet.json',
+            'Content/vmwallet.json',
+            'Content/products.json'
         );
     }
 
