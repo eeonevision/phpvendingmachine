@@ -11,14 +11,38 @@ namespace VMApp\BLL;
 
 class UserWallet implements WalletInterface
 {
+    private $wallet;
 
-    public function getBalance()
+    public function __construct($walletPath)
     {
-        // TODO: Implement getBalance() method.
+        $wallet = (new JsonLoader($walletPath))->load();
     }
 
-    public function getFunds($money)
+    /**
+     * @return mixed
+     */
+    public function getBalance()
     {
-        // TODO: Implement getFunds() method.
+        print_r($this->wallet);
+        return $this->wallet;
+    }
+
+    /**
+     * @param $nominal
+     * @param $amount
+     * @internal param $money
+     */
+    public function addFunds($nominal, $amount)
+    {
+        return $this->wallet[$nominal]+=$amount;
+    }
+
+    /**
+     * @param $nominal
+     * @param $amount
+     */
+    public function withDraw($nominal, $amount)
+    {
+        return $this->wallet[$nominal]-=$amount;
     }
 }
