@@ -15,7 +15,7 @@ class UserWallet implements WalletInterface
 
     public function __construct($walletPath)
     {
-        $wallet = (new JsonLoader($walletPath))->load();
+        $this->wallet = (new JsonLoader($walletPath))->load();
     }
 
     /**
@@ -40,9 +40,15 @@ class UserWallet implements WalletInterface
     /**
      * @param $nominal
      * @param $amount
+     * @return bool
      */
     public function withDraw($nominal, $amount)
     {
-        return $this->wallet[$nominal]-=$amount;
+        if($this->wallet[$nominal] >= $amount) {
+            $this->wallet[$nominal] -= $amount;
+            return true;
+        } else{
+            return false;
+        }
     }
 }
